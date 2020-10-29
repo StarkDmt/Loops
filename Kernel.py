@@ -87,7 +87,7 @@ def T(j, expand = 0):
     
 def initialize_A_inv(dt, D = 1., resolution = 5):
     Base = np.diag(np.asarray([np.inf for i in range(resolution)]))
-    Base[0,0] = ((inverse_sigma0(1,1,dt, expand = 1))[0][0]) / D
+    
     
     return Base 
 
@@ -212,7 +212,7 @@ def fixed_frame_compute(A_inv_initial, steps, delta_t, gamma, cur_size, precisio
     lattice = np.linspace(start = delta_t / precision, stop = delta_t, num = precision)
     
     #stop when relative change becomes small to avoid singular matrices
-    Covs = [forward(A_inv_initial, lat, steps, gamma, cur_size, False) for lat in lattice]
+    Covs = [forward(A_inv_initial, lat, steps + 1, gamma, cur_size, False) for lat in lattice]
     
     return lattice, Covs
 
